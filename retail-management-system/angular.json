@@ -27,7 +27,17 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "config",
+                "output": "/config"
+              },
+              {
+                "glob": "**/web.config",
+                "input": "./",
+                "output": "/"
+              }
             ],
             "styles": [
               "src/styles.scss",
@@ -103,5 +113,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "54233126-38c9-4d03-828d-a51f22a4f0ec"
   }
 }

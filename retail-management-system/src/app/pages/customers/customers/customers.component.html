@@ -1,0 +1,40 @@
+<div class="container">
+
+  <div class="d-flex flex-lg-row flex-column shadow-lg my-4 fixed-height">
+
+      <div class="col-lg-4 p-3 bg-light">
+        <section>
+          <div class="panel-body">
+            <form [formGroup]="customersForm">
+              <fieldset class="row">
+                <mat-form-field appearance="outline" class="w-50">
+                  <!-- <mat-label>{{fullName}}</mat-label> -->
+                  <input
+                    formControlName="fullName"
+                    type="text"
+                    matInput
+                    placeholder="{{
+                      'customrs.enter-customer-fname'
+                    }}"
+                  />
+                </mat-form-field>
+
+              </fieldset>
+            </form>
+          </div>
+          <button
+          class="btn me-3 ms-3"
+          (click)="onSubmit()"
+          [disabled]="submit"
+        >
+          {{
+            customersForm.controls["id"].value
+              ? ("update" )
+              : ("add" )
+          }}
+        </button>
+
+        </section>
+      </div>
+  </div>
+</div>
