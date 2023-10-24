@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/auth/auth.service';
 import { LoginRepository } from 'src/app/domain/login/login.repository';
 import { Login } from 'src/app/domain/login/models/login';
 
@@ -10,55 +11,40 @@ import { Login } from 'src/app/domain/login/models/login';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent  {
-
-
-  LoginForm!:FormGroup;
+  loginForm!:FormGroup;
   login:Login[]=[];
-  constructor(private formBuilder : FormBuilder,private loginRepository:LoginRepository,private router:Router){
+  constructor(private authService:AuthService,private formBuilder : FormBuilder,private loginRepository:LoginRepository,private router:Router){
 
   }
-
 
   ngOnInit(){
     this.createLoginForm();
 
   }
+
   createLoginForm(){
-    this.LoginForm = this.formBuilder.group({
+    this.loginForm = this.formBuilder.group({
       username: ['' , [Validators.required]],
       password: ['' , [Validators.required]],
   });
   }
 
-
-
-
   loginUser(login: Login)
   {
     this.loginRepository.add(login).subscribe((response)=>{
-    if(response.message!=""){
-      this.setToken(response.accessToken);
-      this.router.navigate(['/customer']);
-    }
-    else{
-      this.router.navigate(['/login']);
-    }
+      if (response.accessToken!=null) {
+        this.authService.setToken(response.accessToken);
+        this.router.navigate(['/customer']);
+      }
+      else{
+        this.router.navigate(['/login']);
+
+      }
+
+
   })
   }
 
-  getToken(){
-    return localStorage.getItem('token');
-  }
 
-  setToken(token:string){
-    localStorage.setItem("tokenUser",token);
-  }
-
-
-  logOut()
-  {
-    localStorage.removeItem("tokenUser")
-    this.router.navigateByUrl('/login')
-  }
 
 }

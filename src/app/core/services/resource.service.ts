@@ -44,4 +44,21 @@ getList(p: {} = {}): Observable<Response<T>> {
     })
   );
 }
+
+delete(id: string | number): Observable<any> {
+  return this.httpClient.delete(`${this.APIUrl}/${id}`).pipe(
+    catchError((err) => {
+      throw new Error(err.message);
+    })
+  );
+}
+
+update(resource: T): Observable<any> {
+  // @ts-ignore
+  return this.httpClient.put(`${this.APIUrl}/${resource.id}`, this.toServerModel(resource)).pipe(
+    catchError((err) => {
+      throw new Error(err.message);
+    })
+    );
+}
 }

@@ -13,6 +13,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfigService } from './core/services/config.service';
 import { TokenInterceptorService } from './core/auth/login-interceptor.service';
 import { LoginComponent } from './pages/auth/login/login.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table'
+import { AuthService } from './core/auth/auth.service';
+
+
 
 export function configServiceFactory(
   config: ConfigService
@@ -34,9 +40,13 @@ export function configServiceFactory(
     MatSnackBarModule,
     HttpClientModule,
     MatInputModule,
-    BrowserAnimationsModule
-  ],
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTableModule
+    ],
   providers: [
+    AuthService,
     ConfigService,
     {
       provide: APP_INITIALIZER,

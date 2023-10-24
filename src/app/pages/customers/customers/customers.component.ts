@@ -7,34 +7,48 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
-  styleUrls: ['./customers.component.scss']
+  styleUrls: ['./customers.component.scss'],
 })
 export class CustomersComponent {
   allCustomers: Customers[] = [];
   customersForm!: FormGroup;
   submit: boolean = false;
+  currentData!: Customers;
+  isButtonVisible: boolean = true;
+  displayedColumns: string[] = [
+    'id',
+    'fullName',
+    'nickName',
+    'customerCode',
+    'version',
+    'nationalId',
+    'primaryPhoneNo',
+    'secondaryPhoneNo',
+    'address',
+    'trustReceiptNo',
+    'actions',
+    'delete'
+  ];
 
-constructor(private build: FormBuilder,     private _snackBar: MatSnackBar
-,private customersRepository: CustomersRepository
-  ){
+  constructor(
+    private build: FormBuilder,
+    private _snackBar: MatSnackBar,
+    private customersRepository: CustomersRepository
+  ) {}
 
-  }
-
-  ngOnInit(){
+  ngOnInit() {
     this.custForm();
     this.getAllCustomers();
-
   }
 
   getAllCustomers(): void {
-    console.log("customers");
-
-    this.customersRepository.getList().subscribe((result:any) => {
+    this.customersRepository.getList().subscribe((result: any) => {
       this.allCustomers = result;
-      console.log(this.allCustomers);
     });
   }
-
+  restartForm(): void {
+    this.customersForm.reset();
+  }
   custForm() {
     this.customersForm = this.build.group({
       id: [''],
@@ -61,28 +75,40 @@ constructor(private build: FormBuilder,     private _snackBar: MatSnackBar
     });
   }
 
-
   addCustomer() {
-    this.submit = true;
-    this.customersRepository.add(this.customersForm.value).subscribe(
-      () => {
+    this.customersRepository.add(this.customersForm.value).subscribe(_=>
+      {
         this.getAllCustomers();
-        this.submit = false;
-        console.log("Added");
-
-      },
-      () => {
-        this.submit = false;
       }
     );
   }
+
+  fetchData(customer: Customers): void {
+    this.isButtonVisible = false;
+    this.customersForm.patchValue(customer);
+    this.currentData = customer;
+  }
+
+  deleteCustomer(customer: Customers) {
+    this.customersRepository.delete(customer.id).subscribe(() => {
+      this.getAllCustomers();
+    });
+  }
+
+  updateCustomer() {
+    this.customersRepository.update(this.customersForm.value).subscribe(
+      () => {
+        this.getAllCustomers();
+      },
+    );
+  }
+
   onSubmit() {
     this.customersForm.markAllAsTouched();
     if (this.customersForm.valid) {
       this.customersForm.controls['id'].value
-        ? console.log("update")
-        : this.addCustomer();
+        ? (this.updateCustomer())
+        : (this.addCustomer());
     }
   }
-
 }
