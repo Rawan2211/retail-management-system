@@ -1,0 +1,252 @@
+<div class="container">
+
+  <div class="d-flex flex-lg-row flex-column shadow-lg my-4 fixed-height">
+      <div
+        class="child-height overflow-scroll bg-white data-table w-100"
+      >
+        <table
+          class="table table-responsive h-75"
+          mat-table
+          [dataSource]="allCustomers"
+        >
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef class="fw-bold fs-6">
+              {{ "no" }}.
+            </th>
+            <td mat-cell *matCellDef="let i = index" class="pt-2">
+              {{ i + 1 }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="fullName">
+            <th mat-header-cell *matHeaderCellDef class="fw-bold fs-6">
+              {{ "full-name" }}
+            </th>
+            <td mat-cell *matCellDef="let element" class="pt-2">
+              {{ element.fullName }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="nickName">
+            <th mat-header-cell *matHeaderCellDef class="fw-bold fs-6">
+              {{ "nick-name"  }}
+            </th>
+            <td mat-cell *matCellDef="let element" class="pt-2">
+              {{ element.nickName }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="customerCode">
+            <th mat-header-cell *matHeaderCellDef class="fw-bold fs-6">
+              {{ "code"  }}
+            </th>
+            <td mat-cell *matCellDef="let element" class="pt-2">
+              {{ element.customerCode }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="version">
+            <th mat-header-cell *matHeaderCellDef class="fw-bold fs-6">
+              {{ "version"  }}
+            </th>
+            <td mat-cell *matCellDef="let element" class="pt-2">
+              {{ element.version }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="nationalId">
+            <th mat-header-cell *matHeaderCellDef class="fw-bold fs-6">
+              {{ "national-id"  }}
+            </th>
+            <td mat-cell *matCellDef="let element" class="pt-2">
+              {{ element.nationalId }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="primaryPhoneNo">
+            <th mat-header-cell *matHeaderCellDef class="fw-bold fs-6">
+              {{ "primrary-phone"  }}
+            </th>
+            <td mat-cell *matCellDef="let element" class="pt-2">
+              {{ element.primaryPhoneNo }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="secondaryPhoneNo">
+            <th mat-header-cell *matHeaderCellDef class="fw-bold fs-6">
+              {{ "secondary-phone"  }}
+            </th>
+            <td mat-cell *matCellDef="let element" class="pt-2">
+              {{ element.secondaryPhoneNo }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef class="fw-bold fs-6">
+              {{ "address"  }}
+            </th>
+            <td mat-cell *matCellDef="let element" class="pt-2">
+              {{ element.address }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="trustReceiptNo">
+            <th mat-header-cell *matHeaderCellDef class="fw-bold fs-6">
+              {{ "trustReceiptNo"  }}
+            </th>
+            <td mat-cell *matCellDef="let element" class="pt-2">
+              {{ element.trustReceiptNo }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element" class="update-icon pt-2">
+              <button class="btn table-button" (click)="fetchData(element)">
+                <mat-icon>edit</mat-icon>
+              </button>
+
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element" class="update-icon pt-2">
+              <button class="btn table-button" (click)="deleteCustomer(element)">
+                <mat-icon>delete</mat-icon>
+              </button>
+
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr class="mat-row spinner-row" *matNoDataRow>
+
+          </tr>
+        </table>
+      </div>
+
+
+          </div>
+          </div>
+
+
+
+
+
+<div class="container">
+
+  <div class="d-flex flex-lg-row flex-column shadow-lg my-4 fixed-height">
+
+      <div class="col-lg-6 p-3 bg-light">
+        <section>
+          <div class="panel-body">
+            <form class="form" [formGroup]="customersForm">
+              <fieldset class="row">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input
+                    formControlName="fullName"
+                    type="text"
+                    matInput
+                    placeholder="{{
+                      'enter-customer-fname'
+                    }}"
+                  />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-100">
+                  <input
+                    formControlName="nickName"
+                    type="text"
+                    matInput
+                    placeholder="{{
+                      'enter nickname'
+                    }}"
+                  />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="w-100">
+                  <input
+                    formControlName="customerCode"
+                    type="text"
+                    matInput
+                    placeholder="{{
+                      'enter customerCode'
+                    }}"
+                  />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-100">
+                  <input
+                    formControlName="version"
+                    type="text"
+                    matInput
+                    placeholder="{{
+                      'enter-versione'
+                    }}"
+                  />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-100">
+                  <input
+                    formControlName="nationalId"
+                    type="text"
+                    matInput
+                    placeholder="{{
+                      'enter-nationalId'
+                    }}"
+                  />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-100">
+                  <input
+                    formControlName="primaryPhoneNo"
+                    type="text"
+                    matInput
+                    placeholder="{{
+                      'enter-primaryPhoneNo'
+                    }}"
+                  />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-100">
+                  <input
+                    formControlName="secondaryPhoneNo"
+                    type="text"
+                    matInput
+                    placeholder="{{
+                      'enter-secondaryPhoneNo'
+                    }}"
+                  />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-100">
+                  <input
+                    formControlName="address"
+                    type="text"
+                    matInput
+                    placeholder="{{
+                      'enter-address'
+                    }}"
+                  />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-100">
+                  <input
+                    formControlName="trustReceiptNo"
+                    type="text"
+                    matInput
+                    placeholder="{{
+                      'enter-trustReceiptNo'
+                    }}"
+                  />
+                </mat-form-field>
+              </fieldset>
+            </form>
+          </div>
+          <button
+          class="btn me-3 ms-3"
+          (click)="onSubmit()"
+          >
+          {{
+            customersForm.controls["id"].value
+              ? ("update" )
+              : ("add" )
+          }}
+        </button>
+
+        </section>
+      </div>
+  </div>
+</div>
